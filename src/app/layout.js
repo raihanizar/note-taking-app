@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { Provider } from "@/components/providers/Provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,10 +15,12 @@ export default function RootLayout({ children }) {
   const bodyClassName = `${fontName} h-dvh flex flex-col`
   return (
     <html lang="en">
-      <body className={bodyClassName}>
-        <Header />
-        {children}
-      </body>
+      <Provider>
+        <body className={bodyClassName}>
+          <Header />
+          {children}
+        </body>
+      </Provider>
     </html>
   );
 }
