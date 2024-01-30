@@ -3,7 +3,10 @@
 @tailwind utilities;
 
 @layer base {
-  div {
-    @apply rounded-md
+  p {
+    @apply text-stone-900
+  }
+  button {
+    @apply flex flex-row gap-x-2 justify-between items-center
   }
 }

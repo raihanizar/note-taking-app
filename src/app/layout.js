@@ -12,7 +12,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   const fontName = inter.className;
-  const bodyClassName = `${fontName} h-dvh flex flex-col gap-y-2`
+  const bodyClassName = `${fontName} h-dvh flex flex-col`
   return (
     <html lang="en">
       <body className={bodyClassName}>

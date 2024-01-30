@@ -30,7 +30,7 @@ export const NoteInput = ({ selectedNote, editMode, setEditMode }) => {
     if (type === "title") {
       setNoteTitle(e.target.value);
     }
-    
+
     if (type === "content") {
       setNoteContent(e.target.value);
     }
@@ -104,16 +104,31 @@ export const NoteInput = ({ selectedNote, editMode, setEditMode }) => {
   }
 
   return (
-    <div className="grow flex flex-col bg-stone-300 p-20 gap-y-2 items-end">
+    <div className="grow flex flex-col bg-stone-300 p-20 gap-y-2">
       <div className="grow flex flex-col gap-y-2 w-full">
         <textarea className="input-title h-16 bg-stone-300 rounded-md text-3xl font-bold resize-none outline-none" placeholder="Masukan judul notes di sini..." value={noteTitle} onInput={(e) => handleNoteChange(e, "title")}></textarea>
         <textarea className="input-content grow bg-stone-300 rounded-md resize-none outline-none" placeholder="Masukan teks notes di sini..." value={noteContent} onInput={(e) => handleNoteChange(e, "content")}></textarea>
       </div>
-      <div className="flex flex-row gap-x-2">
-        <button className="bg-stone-400 p-2 rounded-md" onClick={createNewNote}>Buat Note Baru +</button>
-        <button className="bg-orange-400 p-2 rounded-md disabled:bg-orange-300 disabled:text-slate-700" disabled={!canSave} onClick={saveNoteData}>Simpan</button>
+      <div className="flex flex-row justify-between">
+        <div className="flex flex-row gap-x-2">
+          <button className="bg-orange-400 disabled:bg-orange-300 hover:bg-orange-500 hover:disabled:cursor-not-allowed p-2 rounded-md disabled:text-slate-600" disabled={!canSave} onClick={saveNoteData}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 448 512"><path fill="currentColor" d="m433.941 129.941l-83.882-83.882A48 48 0 0 0 316.118 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V163.882a48 48 0 0 0-14.059-33.941M224 416c-35.346 0-64-28.654-64-64c0-35.346 28.654-64 64-64s64 28.654 64 64c0 35.346-28.654 64-64 64m96-304.52V212c0 6.627-5.373 12-12 12H76c-6.627 0-12-5.373-12-12V108c0-6.627 5.373-12 12-12h228.52c3.183 0 6.235 1.264 8.485 3.515l3.48 3.48A11.996 11.996 0 0 1 320 111.48" /></svg>
+            <p>Simpan</p>
+          </button>
+          {editMode
+            ? <button className="bg-rose-600 hover:bg-rose-700 p-2 rounded-md text-stone-900" onClick={deleteNote}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 448 512"><path fill="currentColor" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16M53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z" /></svg>
+              <p>Delete Note</p>
+            </button>
+            : null
+          }
+        </div>
+
         {editMode
-          ? <button className="bg-rose-600 text-white p-2 rounded-md" onClick={deleteNote}>Delete Note -</button>
+          ? <button className="bg-stone-400 hover:bg-stone-500 p-2 rounded-md text-stone-900" onClick={createNewNote}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 448 512"><path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32"/></svg>
+            <p>Buat Note Baru</p>
+          </button>
           : null
         }
       </div>

@@ -11,7 +11,7 @@ export const NoteApp = ({ allNotes }) => {
   let selectedNote = allNotes.find(note => note._id === selectedNoteId);
 
   return (
-    <div className="h-full flex flex-row gap-x-2">
+    <div className="h-full flex flex-row">
       <NoteList allNotes={allNotes} setSelectedNoteId={setSelectedNoteId} setEditMode={setEditMode}/>
       <NoteInput selectedNote={selectedNote} setEditMode={setEditMode} editMode={editMode} />
     </div>

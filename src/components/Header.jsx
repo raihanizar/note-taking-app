@@ -1,7 +1,7 @@
 export const Header = () => {
   return (
-    <div className="bg-stone-800 p-4 text-slate-100">
-      Note Taking App
+    <div className="bg-stone-500 p-2 text-stone-300 text-sm font-bold flex justify-center border-solid border-b border-stone-600">
+      <p>CatatCepat</p>
     </div>
   )
 }
