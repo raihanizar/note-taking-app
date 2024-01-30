@@ -13,7 +13,7 @@ export const NoteApp = ({ allNotes }) => {
   return (
     <div className="h-full flex flex-row gap-x-2">
       <NoteList allNotes={allNotes} setSelectedNoteId={setSelectedNoteId} setEditMode={setEditMode}/>
-      <NoteInput selectedNote={selectedNote} editMode={editMode} />
+      <NoteInput selectedNote={selectedNote} setEditMode={setEditMode} editMode={editMode} />
     </div>
   );
 }
