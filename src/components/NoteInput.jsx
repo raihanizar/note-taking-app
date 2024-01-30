@@ -9,8 +9,6 @@ export const NoteInput = ({ selectedNote, editMode }) => {
   const [noteTitle, setNoteTitle] = useState("");
   const [noteContent, setNoteContent] = useState("");
 
-  const noteData = [{ "title": noteTitle, "content": noteContent }]
-
   useEffect(() => {
     if (editMode) {
       setNoteTitle(selectedNote.title);
@@ -18,13 +16,32 @@ export const NoteInput = ({ selectedNote, editMode }) => {
     }
   }, [editMode, selectedNote]);
 
-  async function postNoteData() {
-    const res = await fetch("https://v1.appbackend.io/v1/rows/rz4KwC0FcIUZ", {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(noteData)
-    });
-    const resJson = await res.json();
+  async function saveNoteData() {
+    const method = editMode ? "PUT" : "POST";
+    const noteData = editMode
+      ? { "_id": selectedNote._id, "title": noteTitle, "content": noteContent }
+      : [{ "title": noteTitle, "content": noteContent }]
+    
+    editMode ? console.log(selectedNote._id) : console.log("");
+    console.log(editMode);
+    console.log(method);
+    console.log(noteData);
+
+    try {
+      const res = await fetch("https://v1.appbackend.io/v1/rows/fGVoMpWXWu4c", {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(noteData),
+        cache: "no-store"
+      });
+      const resJson = await res.json();
+      console.log(resJson);
+    } catch (err) {
+      console.error(resJson);
+    }
+    
+    
+    
 
     // refresh agar re-fetch setelah post data
     router.refresh();
@@ -40,7 +57,7 @@ export const NoteInput = ({ selectedNote, editMode }) => {
         <textarea className="input-title h-16 bg-stone-300 rounded-md text-3xl font-bold resize-none outline-none" placeholder="Masukan judul catatan di sini..." value={noteTitle} onChange={(e) => setNoteTitle(e.target.value)}></textarea>
         <textarea className="input-content grow bg-stone-300 rounded-md resize-none outline-none" placeholder="Masukan teks catatan di sini..." value={noteContent} onChange={(e) => setNoteContent(e.target.value)}></textarea>
       </div>
-      <button className="bg-orange-400 p-2 rounded-md" onClick={postNoteData}>Simpan</button>
+      <button className="bg-orange-400 p-2 rounded-md" onClick={saveNoteData}>Simpan</button>
     </div>
   )
 }
