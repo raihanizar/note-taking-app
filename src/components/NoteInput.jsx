@@ -16,6 +16,15 @@ export const NoteInput = ({ selectedNote, editMode, setEditMode }) => {
     }
   }, [editMode, selectedNote]);
 
+  function createNewNote() {
+    // kembalikan ke mode create
+    setEditMode(false);
+
+    // kosongkan text area
+    setNoteTitle("");
+    setNoteContent("");
+  }
+
   async function saveNoteData() {
     let method;
     let noteData;
@@ -41,7 +50,7 @@ export const NoteInput = ({ selectedNote, editMode, setEditMode }) => {
       console.error(resJson);
     }
 
-    // refresh agar re-fetch setelah post data
+    // refresh agar re-fetch setelah data berubah
     router.refresh();
 
     // kosongkan text area
@@ -49,13 +58,29 @@ export const NoteInput = ({ selectedNote, editMode, setEditMode }) => {
     setNoteContent("");
   }
 
-  function createNewNote() {
-    // kembalikan ke mode create
-    setEditMode(false);
+  async function deleteNote() {
+    try {
+      const res = await fetch("https://v1.appbackend.io/v1/rows/fGVoMpWXWu4c", {
+        method: "DELETE",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify([selectedNote._id]),
+        cache: "no-store"
+      });
+      const resJson = await res.json();
+      console.log(resJson);
+    } catch (err) {
+      console.error(resJson);
+    }
+
+    // refresh agar re-fetch setelah data berubah
+    router.refresh();
 
     // kosongkan text area
     setNoteTitle("");
     setNoteContent("");
+
+    // reset ke create mode
+    createNewNote();
   }
 
   return (
@@ -65,8 +90,12 @@ export const NoteInput = ({ selectedNote, editMode, setEditMode }) => {
         <textarea className="input-content grow bg-stone-300 rounded-md resize-none outline-none" placeholder="Masukan teks catatan di sini..." value={noteContent} onChange={(e) => setNoteContent(e.target.value)}></textarea>
       </div>
       <div className="flex flex-row gap-x-2">
-        <button className="bg-orange-400 p-2 rounded-md" onClick={saveNoteData}>Simpan</button>
         <button className="bg-stone-400 p-2 rounded-md" onClick={createNewNote}>Buat Note Baru +</button>
+        <button className="bg-orange-400 p-2 rounded-md" onClick={saveNoteData}>Simpan</button>
+        {editMode
+          ? <button className="bg-rose-600 text-white p-2 rounded-md" onClick={deleteNote}>Delete Note -</button>
+          : null
+        }
       </div>
     </div>
   )
