@@ -2,13 +2,21 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export const NoteInput = ({ allNotes }) => {
+export const NoteInput = ({ selectedNote, editMode }) => {
   const router = useRouter();
   const [noteTitle, setNoteTitle] = useState("");
   const [noteContent, setNoteContent] = useState("");
 
   const noteData = [{ "title": noteTitle, "content": noteContent }]
+
+  useEffect(() => {
+    if (editMode) {
+      setNoteTitle(selectedNote.title);
+      setNoteContent(selectedNote.content);
+    }
+  }, [editMode, selectedNote]);
 
   async function postNoteData() {
     const res = await fetch("https://v1.appbackend.io/v1/rows/rz4KwC0FcIUZ", {

@@ -8,7 +8,6 @@ async function getAllNotes() {
 
 export default async function Home() {
   const { data } = await getAllNotes();
-  console.log(data);
 
   return (
     <div className="grow flex flex-col gap-y-2">
