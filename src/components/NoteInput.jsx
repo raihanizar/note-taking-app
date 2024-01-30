@@ -17,10 +17,16 @@ export const NoteInput = ({ selectedNote, editMode, setEditMode }) => {
   }, [editMode, selectedNote]);
 
   async function saveNoteData() {
-    const method = editMode ? "PUT" : "POST";
-    const noteData = editMode
-      ? { "_id": selectedNote._id, "title": noteTitle, "content": noteContent }
-      : [{ "title": noteTitle, "content": noteContent }]
+    let method;
+    let noteData;
+
+    if (editMode) {
+      method = "PUT";
+      noteData = { "_id": selectedNote._id, "title": noteTitle, "content": noteContent };
+    } else {
+      method = "POST";
+      noteData = [{ "title": noteTitle, "content": noteContent }];
+    }
 
     try {
       const res = await fetch("https://v1.appbackend.io/v1/rows/fGVoMpWXWu4c", {
